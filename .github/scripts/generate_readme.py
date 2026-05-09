@@ -51,12 +51,17 @@ def extract_metadata(md_path):
 
     return meta
 
+IGNORE_FILES = {"📝 LeetCode [题号]：[题目名称].md", "模板.md"} #可忽略文档的地方
+
 def find_all_md():
     """遍历目录，收集所有 md 文件（排除特殊目录）"""
     records = []
     for root, dirs, files in os.walk(SOLUTIONS_ROOT):
         dirs[:] = [d for d in dirs if d not in EXCLUDE_DIRS and not d.startswith(".")]
         for file in files:
+            # 跳过忽略列表中的文件
+            if file.lower() in IGNORE_FILES:
+                continue
             if file.endswith(".md") and file.lower() != "readme.md":
                 full_path = os.path.join(root, file)
                 meta = extract_metadata(full_path)
