@@ -51,7 +51,7 @@ def extract_metadata(md_path):
 
     return meta
 
-IGNORE_FILES = {"📝 LeetCode [题号]：[题目名称].md", "模板.md"} #可忽略文档的地方
+IGNORE_FILES = {"LeetCode [题号]：[题目名称].md", "模板.md"} #可忽略文档的地方
 
 def find_all_md():
     """遍历目录，收集所有 md 文件（排除特殊目录）"""
