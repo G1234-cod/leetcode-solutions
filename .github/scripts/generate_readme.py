@@ -51,7 +51,8 @@ def extract_metadata(md_path):
 
     return meta
 
-IGNORE_FILES = {"LeetCode [题号]：[题目名称].md", "模板.md"} #可忽略文档的地方
+# 🔥 修复 Bug 1：将忽略列表中的字母全部改为小写，以匹配 file.lower()
+IGNORE_FILES = {"leetcode [题号]：[题目名称].md", "模板.md"}
 
 def find_all_md():
     """遍历目录，收集所有 md 文件（排除特殊目录）"""
@@ -69,6 +70,8 @@ def find_all_md():
                     continue
                 # 计算相对于仓库根目录的路径，用于链接
                 rel_path = os.path.relpath(full_path, SOLUTIONS_ROOT)
+                # 🔥 修复 Bug 2：强制将 Windows 的反斜杠 \ 替换为 Web 标准的正斜杠 /
+                rel_path = rel_path.replace("\\", "/")
                 # 对路径中的空格等字符进行转义，保证链接正确
                 encoded_rel_path = quote(rel_path)
                 meta["rel_path"] = encoded_rel_path
